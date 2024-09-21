@@ -61,11 +61,10 @@ def add_user_in_db(login: str, user_info: dict):
     data['users_list'][login] = new_user
 
     # Сохраняем обновленные данные в файл
-    with open(database_user, 'w') as f:
-        json.dump(data, f, indent=4)
+    # with open(database_user, 'w') as f:
+    #     json.dump(data, f, indent=4)
 
     return telegram_constants['user_added'].replace('[username]', login)  # Вернуть сообщение об успешном добавлении
-
 
 
 def check_user_exists(login: str) -> bool:
@@ -76,4 +75,3 @@ def check_user_exists(login: str) -> bool:
             return login in data['users_list']
     except (FileNotFoundError, json.JSONDecodeError):
         return False
-

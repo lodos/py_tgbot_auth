@@ -26,11 +26,8 @@ telegram_constants = {
 
     "user_profile": f"""
 Имя пользователя: [login]
-Дата регистрации: [registration_date]
-Дата истечения: [expiry_date]
 
 Информация об аккаунте:
-Источник регистрации: [auth_source]
 Имя: [first_name]
 Фамилия: [last_name]
 Язык: [language_code]

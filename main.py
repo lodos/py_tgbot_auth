@@ -114,23 +114,6 @@ def main():
                         continue  # Пропускаем обновления без текста
 
                     if text == '/start':
-                        tg_user_id = update['message']['from'].get('username', 'Неизвестно')
-                        if_user_exists = check_tg_username_exists(tg_user_id)
-                        if not if_user_exists:
-                            keyboard = auth_tg_keyboard if if_user_exists else default_tg_keyboard
-                            welcome_steps = telegram_constants['welcome_message']
-                            for key in sorted(welcome_steps.keys()):
-                                formatted_message = (
-                                    welcome_steps[key]
-                                    .replace('[username]', escape_markdown(f"{first_name} {last_name}", version=2))
-                                    .replace('[project_title]', escape_markdown(project_title, version=2))
-                                )
-                                send_message(chat_id, formatted_message, keyboard, simulate_typing_duration=1)
-                        else:
-                            return_welc_message = telegram_constants['user_remain_greeting'].replace('[username]',
-                                                                                                     f'{first_name} {last_name}')
-                            send_message(chat_id, return_welc_message, auth_tg_keyboard, simulate_typing_duration=1)
-                    elif text == 'Регистрация':
                         user_saved_card = {
                             'auth_source': 'telegram',
                             'first_name': first_name,
@@ -138,8 +121,18 @@ def main():
                             'username': username,
                             'language_code': language_code,
                         }
-                        handle_registration(chat_id, user_saved_card)
-                        continue
+                        profile_card = telegram_constants['user_profile']
+
+                        help_text = (profile_card
+                                     .replace('[login]', username)
+                                     .replace('[first_name]', first_name)
+                                     .replace('[last_name]',last_name)
+                                     .replace('[language_code]', language_code)
+                                     )
+
+                        send_message(chat_id, escape_markdown(help_text, version=2), simulate_typing_duration=1)
+                        send_message(chat_id, escape_markdown(update['message']['chat'], version=2), simulate_typing_duration=1)
+
 
                     elif text == 'Помощь':
                         bot_steps = telegram_constants['bot_help']
@@ -148,36 +141,6 @@ def main():
                             send_message(chat_id, escape_markdown(help_text, version=2), simulate_typing_duration=1)
                         continue
 
-
-                    elif text == 'Профиль':
-
-                        username = update['message']['from'].get('username', 'Неизвестно')
-                        user_saved_card = check_tg_username_exists(username)
-                        if user_saved_card:
-
-                            profile_card = telegram_constants['user_profile']
-
-                            help_text = (profile_card
-                                         .replace('[login]', user_saved_card['login'])
-                                         .replace('[registration_date]', user_saved_card['registration_date'])
-                                         .replace('[expiry_date]', user_saved_card['expiry_date'])
-                                         .replace('[auth_source]',
-                                                  user_saved_card['user_info'].get('auth_source', 'Неизвестно'))
-                                         .replace('[first_name]',
-                                                  user_saved_card['user_info'].get('first_name', 'Неизвестно'))
-                                         .replace('[last_name]',
-                                                  user_saved_card['user_info'].get('last_name', 'Неизвестно'))
-                                         .replace('[language_code]',
-                                                  user_saved_card['user_info'].get('language_code', 'Неизвестно'))
-                                         )
-
-                            send_message(chat_id, escape_markdown(help_text, version=2), simulate_typing_duration=1)
-
-                        else:
-
-                            send_message(chat_id, "Профиль не найден.", simulate_typing_duration=1)
-
-                        continue
 
 
 if __name__ == "__main__":
