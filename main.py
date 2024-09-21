@@ -78,11 +78,10 @@ def handle_registration(chat_id, user_info):
     susername = f"{user_info.get('first_name', '')} {user_info.get('last_name', '')}"
 
     if not check_user_exists(user_info['username']):
+        print(user_info)
         add_user_in_db(user_info['username'], user_info)
 
-        welcome_message = telegram_constants['user_registration_complete'].replace('[username]',
-                                                                                   escape_markdown(susername,
-                                                                                                   version=2))
+        welcome_message = telegram_constants['user_added'].replace('[username]', escape_markdown(susername,  version=2))
         send_message(chat_id, welcome_message, auth_tg_keyboard, simulate_typing_duration=1)
     else:
         formatted_message = telegram_constants['user_remain_greeting'].replace('[username]',

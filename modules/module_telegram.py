@@ -64,7 +64,7 @@ def add_user_in_db(login: str, user_info: dict):
     with open(database_user, 'w') as f:
         json.dump(data, f, indent=4)
 
-    return telegram_constants['user_added']  # Вернуть сообщение об успешном добавлении
+    return telegram_constants['user_added'].replace('[username]', login)  # Вернуть сообщение об успешном добавлении
 
 
 
