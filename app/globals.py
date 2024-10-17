@@ -18,8 +18,8 @@ telegram_settings = {
         'port': 8443,
     },
     'settings': {
-        'token': '7931868142:AAH4OY2qLG59QLMp1D5icdGbqaWfSbRtcwM',
-        "bot_name": 'EPGSDemoBot',
+        'token': '[TG_BOT_TOKEN]',
+        "bot_name": '[TG_BOT_NAME]',
     },
 }
 
@@ -28,9 +28,9 @@ params = {
     "port": 8003
 }
 
-#  новая версия лицензирования
+# Basic auth credits
 auth_params = {
-    'username': 'tgbot',
-    'password': 'Pq6827CmJD5Hl6OjcBQpjp9ceUJtAUM',
+    'username': '[BASIC_AUTH_LOGIN]',
+    'password': '[BASIC_AUTH_PASS]',
 }
 
